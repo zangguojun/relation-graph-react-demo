@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import RelationGraph, {RelationGraphInstance} from 'relation-graph/react';
+import RelationGraph from 'relation-graph/react';
 import type { MutableRefObject} from 'react';
 import type {
   RGLine,
@@ -56,7 +56,6 @@ const staticJsonData = {
 };
 
 const NodeSlot: React.FC<RGNodeSlotProps> = ({node}) => {
-  console.log('NodeSlot:');
   if (node.id === '2') { // if rootNode
     return <div style={{zIndex: 555, opacity: 0.5, lineHeight:'100px', width: '100px', height: '100px', color: '#000000', borderRadius:'50%', boxSizing: 'border-box', fontSize: '18px', textAlign: 'center', overflow: 'hidden'}}>
       <div style={{width: '100%', height: (node.data!.percent * 100) + '%', marginTop: ((1-node.data!.percent) * 100) + '%', background: 'linear-gradient(to bottom, #00FFFF, #FF00FF)'}}>
@@ -75,6 +74,7 @@ const SimpleGraph: React.FC = () => {
   }, []);
   const showGraph = async () => {
     await graphRef.current.setJsonData(staticJsonData, (graphInstance) => {
+      console.log('🚀~ 78  graphInstance', graphInstance)
     });
   }
   const options:RGOptions = {
@@ -94,9 +94,8 @@ const SimpleGraph: React.FC = () => {
     console.log('onLineClick:', line.text, line.from, line.to);
     return true;
   };
-  return <div>
-    <div>ok</div>
-    <div style={{ height: 600, width: 900, border: '#efefef solid 1px' }}>
+  return (
+    <div style={{ width: '100vw', height: '100vh' }}>
       <RelationGraph
         ref={graphRef}
         options={options}
@@ -105,6 +104,6 @@ const SimpleGraph: React.FC = () => {
         onLineClick={onLineClick}
       />
     </div>
-  </div>;
+  );
 };
 export default SimpleGraph;
